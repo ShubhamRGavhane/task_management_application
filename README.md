@@ -71,7 +71,7 @@ The goal of this project is to demonstrate strong fundamentals in frontend, back
 
     cd backend
     npm install
-    node server.js
+    node app.js
 
 # Server will start on:
 
