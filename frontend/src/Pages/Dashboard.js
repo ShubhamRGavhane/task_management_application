@@ -36,7 +36,7 @@ export default function Dashboard() {
   }, []);
 
   const fetchTasks = async () => {
-    const res = await axios.get("http://localhost:5000/api/tasks", {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks`, {
       headers: { Authorization: token },
     });
     setTasks(res.data);
@@ -70,13 +70,13 @@ export default function Dashboard() {
 
     if (isEdit) {
       await axios.put(
-        `http://localhost:5000/api/tasks/${editId}`,
+        `${process.env.REACT_APP_API_URL}/api/tasks/${editId}`,
         { title, status },
         { headers: { Authorization: token } },
       );
     } else {
       await axios.post(
-        "http://localhost:5000/api/tasks",
+        `${process.env.REACT_APP_API_URL}/api/tasks`,
         { title, status },
         { headers: { Authorization: token } },
       );
@@ -87,9 +87,12 @@ export default function Dashboard() {
   };
 
   const confirmDelete = async () => {
-    await axios.delete(`http://localhost:5000/api/tasks/${deleteId}`, {
-      headers: { Authorization: token },
-    });
+    await axios.delete(
+      `${process.env.REACT_APP_API_URL}/api/tasks/${deleteId}`,
+      {
+        headers: { Authorization: token },
+      },
+    );
     setDeleteId(null);
     fetchTasks();
   };
