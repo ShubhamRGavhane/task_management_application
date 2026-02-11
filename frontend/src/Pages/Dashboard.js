@@ -27,20 +27,20 @@ export default function Dashboard() {
 
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!token) {
-      window.location.href = "/login";
-      return;
-    }
-    fetchTasks();
-  }, []);
-
   const fetchTasks = async () => {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks`, {
       headers: { Authorization: token },
     });
     setTasks(res.data);
   };
+
+  useEffect(() => {
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+    fetchTasks();
+  }, [token, fetchTasks]);
 
   const openAddModal = () => {
     setIsEdit(false);
