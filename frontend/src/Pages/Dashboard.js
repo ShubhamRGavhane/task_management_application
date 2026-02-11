@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const styleSheet = document.styleSheets[0];
 styleSheet.insertRule(
@@ -27,12 +27,26 @@ export default function Dashboard() {
 
   const token = localStorage.getItem("token");
 
-  const fetchTasks = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks`, {
-      headers: { Authorization: token },
-    });
-    setTasks(res.data);
-  };
+  const fetchTasks = useCallback(async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/tasks`,
+        {
+          headers: { Authorization: token },
+        },
+      );
+      setTasks(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   useEffect(() => {
     if (!token) {
