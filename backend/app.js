@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI);
-console.log("MONGO_URI:", process.env.MONGO_URI);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
