@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const router = express.Router();
-const SECRET = "secretkey";
+const SECRET = process.env.JWT_SECRET || "secretkey";
 
 router.post("/register", async (req, res) => {
   const existing = await User.findOne({ email: req.body.email });
